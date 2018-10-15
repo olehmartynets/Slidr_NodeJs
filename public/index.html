@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="slidecontainer">
+        <p>My slider:</p>
+        <input id="input" type="range" min="1" max="100" value="5" class="slider" id="myRange">
+        <div>Server number: <p id="number"></p></div>
+    </div>
+    <script>
+        function update_input () {
+            var input = document.getElementById("input");
+            var number = document.getElementById("number");
+            setInterval(() => {
+                axios.get("/get")
+                        .catch(error => console.log('BAD', error))
+                        .then((response) => {
+                            input.value = response.data.number;   
+                            number.innerText = response.data.number;
+                        });
+                    
+            }, 2000);
+        }  
+        update_input();
+    </script>
+</body>
+</html>
